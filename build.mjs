@@ -1,0 +1,10 @@
+import { build } from 'esbuild';
+import { mkdir, writeFile, rm } from 'node:fs/promises';
+import path from 'node:path';
+const root = path.dirname(new URL(import.meta.url).pathname);
+await rm(path.join(root, 'docs'), { recursive: true, force: true });
+await mkdir(path.join(root, 'docs/assets'), { recursive: true });
+await build({ absWorkingDir: root, entryPoints: ['src/main.tsx'], bundle: true, platform: 'browser', format: 'esm', jsx: 'automatic', target: ['es2022'], minify: true, sourcemap: false, outfile: 'docs/assets/main.js', alias: { '@': path.join(root, 'src'), 'next/link': path.join(root, 'src/link.tsx') }, define: { 'process.env.NODE_ENV': '"production"' } });
+await writeFile(path.join(root, 'docs/index.html'), '<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><meta name="description" content="Демонстрационная вёрстка загородного дома Наедине"><title>Наедине — просмотр сайта</title><link rel="stylesheet" href="./assets/main.css"></head><body><div id="root"></div><noscript>Для просмотра интерактивной страницы включите JavaScript.</noscript><script type="module" src="./assets/main.js"></script></body></html>');
+await writeFile(path.join(root, 'docs/.nojekyll'), '');
+console.log('Built isolated static display; no database, credentials or booking intake');

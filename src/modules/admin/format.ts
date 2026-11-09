@@ -1,0 +1,8 @@
+export function money(value: bigint | string | number) {
+  const amount = BigInt(value), negative = amount < 0n, absolute = negative ? -amount : amount;
+  return `${negative ? '−' : ''}${new Intl.NumberFormat('ru-RU').format(absolute / 100n)}${absolute % 100n ? ',' + (absolute % 100n).toString().padStart(2, '0') : ''} ₽`;
+}
+export function date(value: Date | string) { return new Intl.DateTimeFormat('ru-RU', { timeZone: 'Asia/Yekaterinburg', year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(value)); }
+export function dateTime(value: Date | string) { return new Intl.DateTimeFormat('ru-RU', { timeZone: 'Asia/Yekaterinburg', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(value)); }
+export const statusLabels: Record<string, string> = { new: 'Новая', contacted: 'Связались', hold: 'Удержание', awaiting_deposit: 'Ожидает предоплату', confirmed: 'Подтверждена', checked_in: 'Гости заехали', completed: 'Завершена', cancelled: 'Отменена', expired: 'Истекла' };
+export const eventLabels: Record<string, string> = { manual_booking_created: 'Владелец добавил заявку', booking_completed: 'Проживание завершено', review_invitation_issued: 'Выдано приглашение на отзыв', review_invitation_reissue: 'Приглашение перевыпущено', review_invitation_revoke: 'Приглашение отозвано', booking_created: 'Получена заявка', guest_contacted: 'Связались с гостем', hold_created: 'Установлено удержание', hold_extended: 'Удержание продлено', hold_expired: 'Срок удержания истёк', booking_confirmed: 'Бронь подтверждена', payment_recorded: 'Записано поступление', booking_transferred: 'Даты перенесены', guest_checked_in: 'Отмечен заезд' };
