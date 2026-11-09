@@ -4,6 +4,7 @@ import { initialContent } from './modules/content/defaults';
 import { initialPricingRules } from './modules/pricing/defaults';
 import { calculateQuote } from './modules/pricing/calculator';
 import './style.css';
+import { staticPhotos } from './modules/media/static-photos';
 // This standalone display has no backend and never submits guest information.
 // Reuse the original calculator and rules; replace only its demo transport.
 window.fetch = async (input, options) => {
@@ -16,4 +17,4 @@ window.fetch = async (input, options) => {
     return Response.json({ error: 'Проверьте даты и состав гостей', issues }, { status: 400 });
   }
 };
-createRoot(document.getElementById('root')!).render(<Landing content={initialContent} pricing={{ rules: initialPricingRules, capacity: 8, demoMode: true }} />);
+createRoot(document.getElementById('root')!).render(<Landing content={initialContent} photos={staticPhotos} pricing={{ rules: initialPricingRules, capacity: 8, demoMode: true }} />);
